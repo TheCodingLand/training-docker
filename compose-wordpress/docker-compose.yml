@@ -9,7 +9,7 @@ services:
       WORDPRESS_DB_PASSWORD: 'Docker123'
    
     ports:
-      - 80-83:80
+      - 80:80
     networks:
       - internal
       - web
