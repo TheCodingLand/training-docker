@@ -19,6 +19,7 @@ services:
     networks:
       - internal
       - web
+
   webpage:
     build: ../webpage-example
     ports:
