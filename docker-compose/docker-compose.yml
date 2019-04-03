@@ -2,8 +2,7 @@ version: "3.7"
 services:
   monpostgres:
     image: postgres
-    #ports:
-    
+    #ports
     networks:
       - internal
     volumes:
@@ -19,15 +18,16 @@ services:
       - ADMINER_DEFAULT_SERVER=monpostgres
     networks:
       - internal
+      - web
   webpage:
     build: ../webpage-example
     ports:
-      - 8584-8585:80
+      - 8584:80
     networks: 
-      - internal
+      - web
 
 networks:
-  
+  web:
   internal:
 
 volumes:
