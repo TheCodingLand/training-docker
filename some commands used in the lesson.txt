@@ -1,0 +1,2 @@
+docker run –e POSTGRES_PASSWORD=dockertest c:/data/postgres:/var/lib/postgresql -p 5432:5432  –d postgres
+docker run -p 8080:8080 -e ADMINER_DEFAULT_SERVER=localhost adminer
