@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  servicedesk:
+    image: cptactionhank/atlassian-jira-service-desk:latest
+    #ports
+    deploy:
+      labels:
+        - "traefik.backend=${CI_PROJECT_NAME}"
+        - "traefik.docker.network=proxy"
+        - "traefik.enable=true"
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:${CI_PROJECT_NAME}.${TINA_DEV_DOMAIN}"
+        - "traefik.frontend.entryPoints=http, https"
+
+    networks:
+      - proxy
+    volumes:
+      - n_jira_sd_db:/var/atlassian/jira
+    environment:
+      - CATALINA_OPTS=
+
+volumes:
+  n_catboost_dev_model:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${TINA_DEV_DOMAIN},nolock,soft,rw"
+      device: ":${NFS_ROOT}/$CI_PROJECT_NAME"
+
+
+networks:
+  internal_dev:
+    driver: overlay
+    external: true
+
