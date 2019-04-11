@@ -1,12 +1,57 @@
 version: "3.7"
 services:
+  postgres:
+    image: postgres
+    volume:
+      - sd_postgres_dev:/var/lib/postgressql
+    networks:
+      - internal_dev
+  
+  adminer:  
+    image: adminer
+    deploy:
+      labels:
+        - "traefik.backend=adminer"
+        - "traefik.docker.network=proxy_dev"
+        - "traefik.enable=true"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:adminer.${TINA_DEV_DOMAIN}"
+        - "traefik.frontend.entryPoints=http, https"
+
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    networks:
+      - internal_dev
+      - proxy_dev
+  
+  confluence:
+    image: atlassian/confluence-server
+    deploy:
+      labels:
+        
+        - "traefik.docker.network=proxy_dev"
+        - "traefik.enable=true"
+        - "traefik.confluence.port=8090"
+        - "traefik.confluence.backend=confluence"
+        - "traefik.confluence.frontend.rule=Host:confluence.${JIRA_DEV_DOMAIN};Path:/confluence"
+        - "traefik.confluence.frontend.entryPoints=http, https"
+        - "traefik.synchrony.port=8091"
+        - "traefik.synchrony.backend=synchrony"
+        - "traefik.synchrony.frontend.rule=Host:confluence.${JIRA_DEV_DOMAIN};Path:/synchrony"
+        - "traefik.synchrony.frontend.entryPoints=http, https"
+    volumes:
+      - confluence_dev:/var/atlassian/application-data/confluence
+    networks:
+      - internal_dev
+      - proxy_dev
+
   servicedesk:
     image: cptactionhank/atlassian-jira-service-desk:latest
     #ports
     deploy:
       labels:
         - "traefik.backend=${CI_PROJECT_NAME}"
-        - "traefik.docker.network=proxy"
+        - "traefik.docker.network=proxy_dev"
         - "traefik.enable=true"
         - "traefik.port=80"
         - "traefik.frontend.rule=Host:${CI_PROJECT_NAME}.${TINA_DEV_DOMAIN}"
@@ -31,4 +76,5 @@ networks:
   internal_dev:
     driver: overlay
     external: true
+  
 
