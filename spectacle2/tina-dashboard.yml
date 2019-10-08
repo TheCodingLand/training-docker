@@ -1,0 +1,24 @@
+
+version: "3.7"
+services:
+  tina-web:
+    image: training_docker
+    deploy:
+     
+      labels:
+
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy"
+        - "traefik.frontend.rule=Host:training.julien.tech"
+        - "traefik.backend=training"
+        - "traefik.port=3000"
+        - "traefik.frontend.entryPoints=http,https"
+     
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    driver: overlay
+    external: true
+
