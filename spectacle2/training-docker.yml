@@ -1,8 +1,8 @@
 
 version: "3.7"
 services:
-  tina-web:
-    image: training_docker
+  training-presentation:
+    image: training_docker:2
     deploy:
      
       labels:
@@ -11,7 +11,7 @@ services:
         - "traefik.docker.network=proxy"
         - "traefik.frontend.rule=Host:training.julien.tech"
         - "traefik.backend=training"
-        - "traefik.port=3000"
+        - "traefik.port=80"
         - "traefik.frontend.entryPoints=http,https"
      
     networks:

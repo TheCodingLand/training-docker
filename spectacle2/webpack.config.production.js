@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: ['index.js', 'src', 'example/assets', 'example/src'].map(
+        include: ['index.js', 'src', 'docker/assets', 'docker/src'].map(
           name => path.resolve(__dirname, name)
         ),
         loader: 'babel-loader'

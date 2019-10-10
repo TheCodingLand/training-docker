@@ -5,6 +5,7 @@ import {
   Appear,
   BlockQuote,
   Cite,
+  Code,
   CodePane,
   ComponentPlayground,
   Deck,
@@ -408,34 +409,7 @@ export default class Presentation extends Component {
           />
           <Notes>Doesn't work in export view, though</Notes>
         </Slide>
-        <Slide
-          transition={['slide']}
-          
-          bgDarken={0.75}
-          getAnimStep={this.updateSteps}
-        >
-          <Heading  textColor="secondary"
-                bgColor="white">
-            Executer un serveur web
-          </Heading>
-          <Appear>
-            <Heading size={3} caps textColor="tertiary">
-              docker run nginx -p 8888:80
-            </Heading>
-          </Appear>
-          <Appear>
-            <Heading size={5} caps textColor="secondary">
-            Ouvrir un Browser et aller sur localhost:8888
-
-            </Heading>
-          </Appear>
-          
-          { this.state.steps >0 &&
-          <Heading size={2} caps fit textColor="secondary">
-            Etape: {this.state.steps}
-          </Heading>
-          }
-        </Slide>
+      
 
 
         <Slide
@@ -546,15 +520,17 @@ export default class Presentation extends Component {
             <Heading bgColor="#000" size={2} margin={45} caps fit textColor="#fff">
              Volume Docker 
             </Heading>
-            <Appear>
-            <BlockQuote>
-            <Quote>Un volume est un emplacement de stockage pour les données persistantes ou partagées des containers</Quote>
             
+            <BlockQuote>
+            <Appear>
+            <Quote>Un volume est un emplacement de stockage pour les données persistantes ou partagées des containers</Quote>
+            </Appear>
           </BlockQuote>
-              </Appear>
+              
             
           
               </Slide>
+
           <Slide transition={['fade']} bgColor="black" textColor="primary">
             <Heading bgColor="#000" size={2} margin={45} caps fit textColor="#fff">
               Eh ! j'ai perdu mes données !!
@@ -575,148 +551,268 @@ export default class Presentation extends Component {
             <Notes> voir mode réseau ci après </Notes>
 
             </Slide>
+
+        <Slide transition={['fade']} bgColor="black" textColor="primary" >
+        <Heading bgColor="#000" size={2} margin={45} caps fit textColor="#fff">
+            Volume Docker 
+        </Heading>
+        
+        <BlockQuote>
+        <Appear>
+          <Quote>Un volume est un emplacement de stockage pour les données persistantes ou partagées des containers</Quote>
+          </Appear>
+        </BlockQuote>
+       
+        </Slide>
+
+         <Slide
+          transition={['slide']}
+          
+          bgDarken={0.75}
+          getAnimStep={this.updateSteps}
+          
+          
+        >
+          <Heading  textColor="secondary"
+                bgColor="white">
+            Executer un serveur web
+          </Heading>
+          <Appear>
+            <Heading size={3} caps textColor="tertiary">
+              <Code>docker run nginx -p 8888:80</Code>
+            </Heading>
+          </Appear>
+          <Appear>
+            <Heading size={5} caps textColor="secondary">
+            Ouvrir un Browser et aller sur https://julien.tech:8888
+
+            </Heading>
+          </Appear>
+          
+          { this.state.steps >0 &&
+          <Heading size={2} caps fit textColor="secondary">
+            Etape: {this.state.steps}
+          </Heading>
+          }
+        </Slide>
+
+
+        <Slide transition={['fade']} bgColor="black" textColor="primary">
+            <Heading bgColor="#000" size={2} margin={45} caps fit textColor="#fff">
+             Cheat Sheet Docker pour ce cours :
+            </Heading>
+
+          <List>
+
+              <Appear>
+                <ListItem textColor="#fff">-i / --interactive :  entrer dans le container en mode interactif</ListItem>
+              </Appear>
+              <Appear>
+                <ListItem textColor="#fff">-t / --tty</ListItem>
+
+              </Appear>
+              <Appear>
+                <ListItem textColor="#fff">-p / --publish : mapper les ports du host vers le container</ListItem>
+
+              </Appear>
+              <Appear>
+                <ListItem textColor="#fff">-v / --volume : mapper un folder : /mon/folder/local:folder/dans/container</ListItem>
+
+              </Appear>
+
+              <Appear>
+                <ListItem textColor="#fff">-e / --env CLIENT=CTG: mapper une variable d’environnement</ListItem>
+              </Appear>
+      
+            </List>
+           
+
+            </Slide>
+
+         
+
+      <Slide
+         // transitionIn={['zoom', 'fade']}
+          //transitionOut={['slide', 'fade']}
+          bgColor="primary"
+        >
+        <Heading bgColor="#000" size={2} margin={25} caps fit textColor="#fff">
+            Customiser l'image NGINX : Ajouter une page HTML a NGINX
+        </Heading>
+        
+       <List>
+           <Appear>
+             <ListItem textColor="#fff">Créer le fichier Dockerfile avec le contenu suivant :</ListItem>
+            
+           </Appear>
+           <Appear>
+           <Code>FROM nginx:latest</Code>
+          </Appear>  
+          <br/>
+          <Appear>
+          <Code>COPY ./webpage/build /usr/share/nginx/html</Code>
+           </Appear>    
+           <Appear>
+             <ListItem textColor="#fff">Construire l'image avec <Code>docker build -t myhttp .</Code></ListItem>
+             
+          
+          </Appear>     
+             <Appear>
+             <ListItem textColor="#fff">Executer le container <Code>docker run –p 8889:80 myhttp</Code></ListItem>
+             </Appear>
+             <Appear>
+              <ListItem textColor="#fff">Ouvrir un Browser et aller sur https://julien.tech:8889</ListItem>
+             </Appear>
+             <Appear>
+              <ListItem textColor="#fff">Comparer avec le container précedent sur https://julien.tech:8888</ListItem>
+             </Appear>
+       </List>
+       
+       
+          <Notes>
+            <List>
+              <ListItem>aller sur coder.julien.tech</ListItem>
+              <ListItem>./webpage/build contient un build d'une appli react.</ListItem>
+              <ListItem>Sauvegerder le fichier sous le nom Dockerfile</ListItem>
+              <ListItem>etc...</ListItem>
+            </List>
+          </Notes>
+        </Slide>
+        
+        
+        
+        <Slide
+        transitionIn={['zoom', 'fade']}
+        transitionOut={['slide', 'fade']}
+          bgColor="primary"
+        >
+        <Heading bgColor="#000" size={2} margin={25} caps fit textColor="#fff">
+            Docker Compose 1/2
+        </Heading>
+        
+       <List>
+           <Appear>
+             <ListItem textColor="#fff">Docker compose est un moyen de déclarer un ensemble de services et de passer les paramètres, identiques pour la plupart avec ce qui est possible en utilisant la ligne de commande.</ListItem>
+
+           </Appear>
+
+
+       </List>
+       </Slide>
+
+       <Slide
+        transitionIn={['zoom', 'fade']}
+        transitionOut={['slide', 'fade']}
+          bgColor="primary"
+        >
+        <Heading bgColor="#000" size={2} margin={25} caps fit textColor="#fff">
+            Docker Compose 2/2
+        </Heading>
+        
+       <List>
+           <Appear>
+             <ListItem textColor="#fff">La syntaxe des fichiers de configurations sont très proches de DOCKER SWARM, mais il y a des variations importantes dans la facon d'aborder un environnement multi hosts, et swarm reflete cette différence. 
+             Attention donc à la confusion entre des fichiers utilisant docker compose et docker swarm.</ListItem>
+           </Appear>
+           <Appear>
+           <ListItem>La plupart du temps, vous verrez une partie "deploy:" dans un fichier déploiement pour swarm, mais jamais pour docker-compose.</ListItem>
+           </Appear>
+           <Appear>
+           <ListItem  textColor="#fff">Certains mots clés comme priviliedged, restart, ou hostname ne sont pas supportés par swarm.</ListItem>
+           </Appear>
+
+       </List>
+
+      
+      
+          <Notes>
+            <List>
+              <ListItem>aller sur coder.julien.tech</ListItem>
+              <ListItem>./webpage/build contient un build d'une appli react.</ListItem>
+              <ListItem>Sauvegerder le fichier sous le nom Dockerfile</ListItem>
+              <ListItem>etc...</ListItem>
+            </List>
+          </Notes>
+        </Slide>
+
+        <Slide
+        transitionIn={['zoom', 'fade']}
+        transitionOut={['slide', 'fade']}
+          bgColor="primary"
+        >
+        <Heading bgColor="#000" size={2} margin={25} caps fit textColor="#fff">
+          Exécution privilégiée - Dans quel cas ?  
+        </Heading>
+        <Heading size={5} margin={25}>Si un container doit pouvoir accéder aux fonctionnalités Docker du host comme: </Heading>
+        
+       <List>
+           <Appear>
+             <ListItem textColor="#fff">Lister des ressources Docker</ListItem>
+           </Appear>
+           <Appear>
+            <ListItem>Créer, supprimer, et gérer des ressources Docker</ListItem>
+           </Appear>
+           <Appear>
+            <ListItem  textColor="#fff">Lire les informations comme les LABELS des autres containers (nous verrons la notion de label dans le prochain cours)</ListItem>
+           </Appear>
+
+       </List>
+
+      
+      
+          <Notes>
+            <List>
+              <ListItem>aller sur coder.julien.tech</ListItem>
+              <ListItem>./webpage/build contient un build d'une appli react.</ListItem>
+              <ListItem>Sauvegerder le fichier sous le nom Dockerfile</ListItem>
+              <ListItem>etc...</ListItem>
+            </List>
+          </Notes>
+        </Slide>
+
+        <Slide
+        transitionIn={['zoom', 'fade']}
+        transitionOut={['slide', 'fade']}
+          bgColor="primary"
+        >
+        <Heading bgColor="#000" size={2} margin={25} caps fit textColor="#fff">
+         Exemples de services avec éxécution privillégiée :  
+        </Heading>
+        
+        
+       <List>
+           <Appear>
+             <ListItem textColor="#fff">Traefik , un reverse proxy qui se base sur les labels des services swarm ou kubernetes pour s'auto-configurer</ListItem>
+           </Appear>
+           <Appear>
+            <ListItem>Portainer, un outil de gestion d'environnement swarm</ListItem>
+           </Appear>
+           <Appear>
+            <ListItem  textColor="#fff">Mon instance Coder ici, qui permet de lancer des containers sur le host lui-même</ListItem>
+           </Appear>
+
+       </List>
+
+      
+      
+          <Notes>
+            <List>
+              <ListItem>aller sur coder.julien.tech</ListItem>
+              <ListItem>./webpage/build contient un build d'une appli react.</ListItem>
+              <ListItem>Sauvegerder le fichier sous le nom Dockerfile</ListItem>
+              <ListItem>etc...</ListItem>
+            </List>
+          </Notes>
+        </Slide>
+
+       
         <Slide transition={['slide']} bgColor="black">
           <BlockQuote>
-            <Quote>Wonderfully formatted quotes</Quote>
-            <Cite>Ken Wheeler</Cite>
+            <Quote>Work in progress</Quote>
+            <Cite>Julien Le Bourg</Cite>
           </BlockQuote>
         </Slide>
-        <Slide
-          transition={['spin', 'zoom']}
-          bgColor="tertiary"
-          controlColor="primary"
-          progressColor="primary"
-        >
-          <Heading caps fit size={1} textColor="primary">
-            Inline Markdown
-          </Heading>
-          <Markdown>
-            {`
-  ![Markdown Logo](${images.markdown.replace('/', '')})
-
-  You can write inline images, [Markdown Links](http://commonmark.org), paragraph text and most other markdown syntax
-  * Lists too!
-  * With ~~strikethrough~~ and _italic_
-  * And let's not forget **bold**
-  * Add some \`inline code\` to your sldes!
-            `}
-          </Markdown>
-          <Notes>Who doesn't love markdown?</Notes>
-        </Slide>
-        {MarkdownSlides`
-#### Create Multiple Slides in Markdown
-All the same tags and elements supported in <Markdown /> are supported in MarkdownSlides.
----
-Slides are separated with **three dashes** and can be used _anywhere_ in the deck. The markdown can either be:
-* A Tagged Template Literal
-* Imported Markdown from another file
----
-Add some inline code to your markdown!
-
-\`\`\`js
-const myCode = (is, great) => 'for' + 'sharing';
-\`\`\`
-          `}
-        <Slide transition={['slide', 'spin']} bgColor="primary">
-          <Heading caps fit size={1} textColor="tertiary">
-            Smooth
-          </Heading>
-          <Heading caps fit size={1} textColor="secondary">
-            Combinable Transitions
-          </Heading>
-          <Notes>So smooth</Notes>
-        </Slide>
-        <SlideSet
-          style={{ backgroundColor: 'blue', border: '10px solid cyan' }}
-        >
-          <Slide transition={['fade']} textColor="tertiary">
-            <List>
-              <Appear>
-                <ListItem>Inline style based theme system</ListItem>
-              </Appear>
-              <Appear>
-                <ListItem>Autofit text</ListItem>
-              </Appear>
-              <Appear>
-                <ListItem>Flexbox layout system</ListItem>
-              </Appear>
-              <Appear>
-                <ListItem>PDF export</ListItem>
-              </Appear>
-              <Appear>
-                <ListItem bulletStyle="greenCheck">Customized bullets</ListItem>
-              </Appear>
-              <Appear>
-                <ListItem>And...</ListItem>
-              </Appear>
-            </List>
-          </Slide>
-          <Slide transition={['slide']} bgColor="primary">
-            <Heading size={1} caps fit textColor="tertiary">
-              Your presentations are interactive
-            </Heading>
-            <Interactive />
-          </Slide>
-        </SlideSet>
-        <Slide transition={['slide']} bgColor="primary">
-          <Heading
-            size={4}
-            caps
-            textColor="secondary"
-            bgColor="white"
-            margin={10}
-          >
-            Pizza Toppings
-          </Heading>
-          <Layout>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHeaderItem />
-                  <TableHeaderItem>2011</TableHeaderItem>
-                  <TableHeaderItem>2013</TableHeaderItem>
-                  <TableHeaderItem>2015</TableHeaderItem>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableItem>None</TableItem>
-                  <TableItem>61.8%</TableItem>
-                  <TableItem>39.6%</TableItem>
-                  <TableItem>35.0%</TableItem>
-                </TableRow>
-                <TableRow>
-                  <TableItem>Pineapple</TableItem>
-                  <TableItem>28.3%</TableItem>
-                  <TableItem>54.5%</TableItem>
-                  <TableItem>61.5%</TableItem>
-                </TableRow>
-                <TableRow>
-                  <TableItem>Pepperoni</TableItem>
-                  <TableItem />
-                  <TableItem>50.2%</TableItem>
-                  <TableItem>77.2%</TableItem>
-                </TableRow>
-                <TableRow>
-                  <TableItem>Olives</TableItem>
-                  <TableItem />
-                  <TableItem>24.9%</TableItem>
-                  <TableItem>55.9%</TableItem>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Layout>
-          <Notes>Hard to find cities without any pizza</Notes>
-        </Slide>
-        <Slide transition={['spin', 'slide']} bgColor="tertiary">
-          <Heading size={1} caps fit lineHeight={1.5} textColor="primary">
-            Made with love in Seattle by
-          </Heading>
-          <Link href="https://www.formidable.com">
-            <Image width="100%" src={images.logo} />
-          </Link>
-          <Notes>Check us out → https://www.formidable.com</Notes>
-        </Slide>
+        
       </Deck>
     );
   }

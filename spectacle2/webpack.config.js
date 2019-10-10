@@ -18,7 +18,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: ['index.js', 'src', 'example/assets', 'example/src'].map(
+        include: ['index.js', 'src', 'docker/assets', 'docker/src'].map(
           name => path.resolve(__dirname, name)
         ),
         loader: 'babel-loader'
@@ -29,22 +29,22 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        include: path.join(__dirname, 'example/assets'),
+        include: path.join(__dirname, 'docker/assets'),
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       },
       {
         test: /\.png$/,
-        include: path.join(__dirname, 'example/assets'),
+        include: path.join(__dirname, 'docker/assets'),
         loader: 'url-loader?mimetype=image/png'
       },
       {
         test: /\.jpg$/,
-        include: path.join(__dirname, 'example/assets'),
+        include: path.join(__dirname, 'docker/assets'),
         loader: 'url-loader?mimetype=image/jpg'
       },
       {
         test: /\.gif$/,
-        include: path.join(__dirname, 'example/assets'),
+        include: path.join(__dirname, 'docker/assets'),
         loader: 'url-loader?mimetype=image/gif'
       }
     ]

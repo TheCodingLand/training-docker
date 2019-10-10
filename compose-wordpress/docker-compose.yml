@@ -1,20 +1,20 @@
 version: '3.7'
 
 services:
-  app:
+  demo-wordpress:
     image: wordpress
    
     environment:
-      WORDPRESS_DB_HOST: 'mariadb:3306'
+      WORDPRESS_DB_HOST: 'demo-mariadb:3306'
       WORDPRESS_DB_PASSWORD: 'Docker123'
    
     ports:
       - 80:80
     networks:
-      - internal
-      - web
+      - demo-internal
+      - demo-web
 
-  mariadb:
+  demo-mariadb:
     image: mariadb
  
     environment:
@@ -25,7 +25,7 @@ services:
   
   
     networks:
-      - internal
+      - demo-internal
     volumes:
      - db:/data/db
 
@@ -34,6 +34,6 @@ volumes:
     
 
 networks:
-  internal:
-  web:
+  demo-internal:
+  demo-web:
 
